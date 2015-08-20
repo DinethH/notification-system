@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="UTF-8">
+
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="bower_components/font-roboto/roboto.html">
+
+    <link rel="import" href="bower_components/lazy-login/lazy-login.html">
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/paper-input/paper-input-decorator.html">
+    <link rel="import" href="bower_components/paper-input/paper-autogrow-textarea.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
+
+
+    <style shim-shadowdom>
+        body {
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+            margin: 0 auto;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <polymer-element name="user-page">
+        <template>
+
+            <style>
+                .message-box {
+                    margin: 10px;
+                    padding: 15px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                }
+                .user-icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background-color: #999;
+                    color: white;
+                }
+            </style>
+
+            <div horizontal layout center center-justified fit>
+                <div style="width: 1200px;" horizontal layout>
+                    <div flex>
+                        <paper-input-decorator floatingLabel label="Your message">
+                            <paper-autogrow-textarea id="a1">
+                                <textarea id="t1" value="{{message}}"></textarea>
+                            </paper-autogrow-textarea>
+                        </paper-input-decorator>
+                        <paper-button on-tap="{{postMessage}}">Send</paper-button>
+                    </div>
+                    <div flex>
+                        <template repeat="{{m in messages}}">
+                            <div horizontal layout class="message-box">
+                                <div class="user-icon" horizontal layout center center-justified>
+                                    <div>{{m.firstName[0]}}{{m.lastName[0]}}</div>
+                                </div>
+                                <div horizontal layout center center-justified style="padding-left: 15px;">
+                                    <div>{{m.message}}</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <core-ajax id="postMessageAjax" auto="false" url="app-api/post-message.php?message={{message}}" handleAs="json" response="{{postResponse}}"></core-ajax>
+
+            <core-ajax id="getMessagesAjax" auto url="app-api/get-messages-user.php" handleAs="json" response="{{messages}}"></core-ajax>
+        
+        </template>
+
+        <script>
+            Polymer({
+                postMessage: function () {
+                    this.$.postMessageAjax.go();
+                },
+                postResponseChanged: function () {
+                    this.$.getMessagesAjax.go();
+                    this.message = "";
+                }
+
+            });
+        </script>
+
+    </polymer-element>
+
+    <user-page></user-page>
+
+</body>
+
+</html>

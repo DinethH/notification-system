@@ -1,0 +1,29 @@
+{
+	"name": "byutv-jsonp",
+	"version": "1.0.1",
+	"authors": [
+		"Ron Peterson"
+	],
+	"description": "A Polymer element that facilitates making JSONP request.  Patterned after Polymer's `core-ajax` element and tested using unit tests.",
+	"keywords": [
+		"web-component",
+		"web-components",
+		"polymer",
+		"byutv-jsonp",
+		"byutv",
+		"jsonp"
+	],
+	"main": "byutv-jsonp.html",
+	"license": "MIT",
+	"homepage": "http://coderfin.github.io/byutv-jsonp/components/byutv-jsonp/",
+	"ignore": [
+		"/.*",
+		"/tests/"
+	],
+	"dependencies": {
+		"polymer": "Polymer/polymer#^0.5.5"
+	},
+	"devDependencies": {
+		"web-component-tester": "*"
+	}
+}

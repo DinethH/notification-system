@@ -1,0 +1,141 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
+<link rel="import" href="../paper-input/paper-input-decorator.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../core-ajax/core-ajax.html">
+
+
+<polymer-element name="lazy-login" attributes="username email createAccountButton">
+    <template>
+        <style>
+            .create-account-button {
+                margin-left: 0;
+                color: grey;
+            }
+            
+            .cancel-button {
+                color: orange;
+            }
+            
+            .login-button {
+                color: green;
+            }
+        </style>
+        <paper-shadow z="0">
+            <div vertical layout>
+                <div>
+                    <template if="{{username}}">
+                        <paper-input-decorator label="Username:" floatingLabel id="decUsername" error="Please enter your username!">
+                            <input type="text" value="{{item.Username}}" is="core-input" id="inUsername">
+                        </paper-input-decorator>
+                    </template>
+
+                    <template if="{{email}}">
+                        <paper-input-decorator label="Email:" floatingLabel id="decEmail" error="Please enter your email address!">
+                            <input type="email" value="{{item.Email}}" is="core-input" id="inEmail">
+                        </paper-input-decorator>
+                    </template>
+
+                    <paper-input-decorator label="Password:" floatingLabel id="decPassword" error="Please enter a password!">
+                        <input type="password" value="{{item.Password}}" is="core-input" id="inPassword">
+                    </paper-input-decorator>
+                </div>
+
+                <div style="padding-top:20px;" horizontal layout>
+                    <div flex>
+                        <template if="{{createAccountButton}}">
+                            <paper-button class="create-account-button">Don't have an account?</paper-button>
+                        </template>
+                    </div>
+
+                    <div>
+                        <paper-button class="cancel-button">Cancel</paper-button>
+                        <paper-button on-tap="{{login}}" class="login-button">Login</paper-button>
+                    </div>
+
+                </div>
+            </div>
+        </paper-shadow>
+
+        <core-ajax id="loginAjax" auto="false" url="app-api/login.php?email={{item.Email}}&password={{item.Password}}" handleAs="json" response="{{loginResponse}}"></core-ajax>
+
+        {{loginResponse}}
+
+    </template>
+
+    <script>
+        Polymer({
+            created: function () {
+                if (this.username) {
+                    this.username = true;
+                } else {
+                    this.username = false;
+                }
+                if (this.email) {
+                    this.email = true;
+                } else {
+                    this.email = false;
+                }
+                if (this.createAccountButton) {
+                    this.createAccountButton = true;
+                } else {
+                    this.createAccountButton = false;
+                }
+                this.item = {};
+            },
+            login: function () {
+                var validEmail = true;
+                var validPassword = true;
+                var validUsername = true;
+
+                if (this.email) {
+                    if (!this.item.Email || this.item.Email.length < 3) {
+                        this.$.decEmail.isInvalid = true;
+                        validEmail = false;
+                    } else {
+                        this.$.decEmail.isInvalid = false;
+                        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                        if (!re.test(this.item.Email)) {
+                            this.$.decEmail.isInvalid = true;
+                            validEmail = false;
+                        } else {
+                            
+                            this.$.decEmail.isInvalid = false;
+                        }
+                        
+                    }
+
+                }
+
+                if (this.username) {
+                    if (!this.item.Username || this.item.Username.length < 3) {
+                        this.$.decUsername.isInvalid = true;
+                        validUsername = false;
+                    } else {
+                        this.$.decUsername.isInvalid = false;
+                    }
+                }
+
+                if (!this.item.Password || this.item.Password.length < 3) {
+                    this.$.decPassword.isInvalid = true;
+                    validPassword = false;
+                } else {
+                    this.$.decPassword.isInvalid = false;
+                }
+                
+                
+                if (validEmail && validPassword) {
+                    this.$.loginAjax.go();
+                }
+            },
+            loginResponseChanged: function () {
+                if (this.loginResponse == 1) {
+                    window.location.href = "http://vishwnv.tk/noti-system/admin.html";
+                } else if (this.loginResponse == 2) {
+                    window.location.href = "http://vishwnv.tk/noti-system/user.html";
+                }
+            }
+        });
+    </script>
+
+</polymer-element>

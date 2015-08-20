@@ -1,0 +1,27 @@
+{
+  "name": "lazy-login",
+  "version": "0.1.0",
+  "authors": [
+    "Dineth Hettiarachchi <dineth@sachintha.com>"
+  ],
+  "description": "A simple login component",
+  "keywords": [
+    "login, polymer, web-components"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/DinethH/lazy-login",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-roboto": "polymer/font-roboto#0.5.2",
+    "paper-button": "polymer/paper-button#0.5.2",
+    "paper-input": "polymer/paper-input#0.5.2",
+    "paper-shadow": "polymer/paper-shadow#0.5.2",
+    "webcomponentsjs": "polymer/webcomponentsjs#0.5.2"
+  }
+}

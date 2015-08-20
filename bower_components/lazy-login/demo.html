@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Lazy-Login</title>
+
+    <script src="../webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="../font-roboto/roboto.html">
+
+    <link rel="import" href="lazy-login.html">
+
+    <style shim-shadowdom>
+        body {
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+            margin: 0 auto;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Email Address</h1>
+    <lazy-login email></lazy-login>
+
+    <br>
+    <br>
+    
+    <h1>Username, Create Account Button</h1>
+    <lazy-login username createAccountButton></lazy-login>
+</body>
+
+</html>
